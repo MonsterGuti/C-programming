@@ -12,9 +12,8 @@ int main() {
     else if (b >= a && b >= c) {
         printf("The largest num is %u\n", b);
     }
-    else {
+    else if (c >= a && c >= b) {
         printf("The largest num is %u\n", c);
     }
-
     return 0;
 }
