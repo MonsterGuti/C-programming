@@ -4,7 +4,7 @@ int main() {
     int points;
     scanf("%d", &points);
     
-    int bonus_points = 0;
+    float bonus_points = 0;
 
     if (points <= 100) {
         bonus_points = 5;

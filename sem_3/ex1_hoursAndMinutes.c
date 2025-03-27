@@ -16,7 +16,7 @@ int main() {
         myHour = 0;
     }
 
-    printf("%02d:%02d\n", myHour, myMinutes);
+    printf("%0.2d:%0.2d\n", myHour, myMinutes);
 
     return 0;
 }

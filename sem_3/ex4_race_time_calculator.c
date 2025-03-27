@@ -12,7 +12,7 @@ int main() {
     int minutes = total_seconds / 60;
     int seconds = total_seconds % 60;
     
-    printf("%d:%02d\n", minutes, seconds);
+    printf("%d:%0.2d\n", minutes, seconds);
     
     return 0;
 }
