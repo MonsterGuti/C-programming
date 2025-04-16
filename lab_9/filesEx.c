@@ -1,34 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
- 
+
 int main() {
     int N;
-    printf("Въведи броя на числата (N): ");
+    printf("Enter the number of integers (N): ");
     scanf("%d", &N);
- 
+
     int* arr = (int*)malloc(N * sizeof(int));
     if (arr == NULL) {
-        printf("Грешка при заделяне на памет.\n");
+        printf("Memory allocation error.\n");
         return 1;
     }
- 
-    printf("Въведи %d цели числа:\n", N);
+
+    printf("Enter %d integers:\n", N);
     for (int i = 0; i < N; i++) {
         scanf("%d", &arr[i]);
     }
- 
+
     FILE* file = fopen("data.bin", "wb");
     if (!file) {
-        printf("Грешка при отваряне на файл.\n");
+        printf("Error opening file.\n");
         free(arr);
         return 1;
     }
- 
+
     fwrite(&N, sizeof(int), 1, file);
     fwrite(arr, sizeof(int), N, file);
     fclose(file);
     free(arr);
- 
-    printf("Файлът е създаден успешно.\n");
+
+    printf("File has been successfully created.\n");
     return 0;
 }
