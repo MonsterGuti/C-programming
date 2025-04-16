@@ -1,0 +1,108 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+ 
+typedef struct {
+    char brand[50]; 
+    char model[6];      
+    float engine_volume; 
+    float price;        
+    char registered;     
+} Car;
+ 
+void add_car() {
+    Car car;
+    printf("Марка: ");
+    scanf(" %[^\n]", car.brand); 
+ 
+    do {
+        printf("Модел: ");
+        scanf("%5s", car.model); 
+    } while (strlen(car.model) > 5);
+ 
+    printf("Обем на двигателя: ");
+    scanf("%f", &car.engine_volume);
+ 
+    printf("Цена: ");
+    scanf("%f", &car.price);
+ 
+    do {
+        printf("Регистрация: ");
+        scanf(" %c", &car.registered);
+    } while (car.registered != 'Y' && car.registered != 'N');
+ 
+    FILE* bin = fopen("cars.bin", "ab");
+    if (!bin) {
+        printf("Грешка при записване във бинарен файл.\n");
+        return;
+    }
+    fwrite(&car, sizeof(Car), 1, bin);
+    fclose(bin);
+ 
+    FILE* txt = fopen("cars.txt", "a");
+    if (!txt) {
+        printf("Грешка при записване във текстов файл.\n");
+        return;
+    }
+    fprintf(txt, "%s %s %.2f %.2f %c\n", car.brand, car.model, car.engine_volume, car.price, car.registered);
+    fclose(txt);
+ 
+    printf("Записът е добавен успешно!\n");
+}
+ 
+void show_all_cars() {
+    Car car;
+    printf("\nПрочититаме от бинарен файл\n");
+ 
+    FILE* bin = fopen("cars.bin", "rb");
+    if (!bin) {
+        printf("Неуспешен достъп до 'cars.bin'.\n");
+    } else {
+        while (fread(&car, sizeof(Car), 1, bin)) {
+            printf("Марка: %s | Модел: %s | Обем: %.2f | Цена: %.2f | Рег: %c\n",
+                   car.brand, car.model, car.engine_volume, car.price, car.registered);
+        }
+        fclose(bin);
+    }
+ 
+    printf("\nПрочититаме от текстов файл\n");
+    FILE* txt = fopen("cars.txt", "r");
+    if (!txt) {
+        printf("Неуспешен достъп до 'cars.txt'.\n");
+    } else {
+        char brand[50], model[6], reg;
+        float volume, price;
+        while (fscanf(txt, "%s %s %f %f %c", brand, model, &volume, &price, &reg) == 5) {
+            printf("Марка: %s | Модел: %s | Обем: %.2f | Цена: %.2f | Рег: %c\n",
+                   brand, model, volume, price, reg);
+        }
+        fclose(txt);
+    }
+}
+ 
+int main() {
+    int choice;
+    do {
+        printf("1. Добави автомобил\n");
+        printf("2. Покажи всички автомобили\n");
+        printf("0. Изход\n");
+        printf("Изберете опция  : ");
+        scanf("%d", &choice);
+ 
+        switch (choice) {
+            case 1:
+                add_car();
+                break;
+            case 2:
+                show_all_cars();
+                break;
+            case 0:
+                printf("Изход от програмата.\n");
+                break;
+            default:
+                printf("Невалиден избор.\n");
+        }
+    } while (choice != 0);
+ 
+    return 0;
+}
