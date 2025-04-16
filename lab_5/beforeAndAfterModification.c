@@ -18,6 +18,7 @@ int main() {
     int num1 = 5, num2 = 15;
     printf("by value:\n");
     by_value(num1, num2);
+    printf("\nFinal sum after byValue function: %d\n", num1 + num2);
     printf("\nby reference:\n");
     by_reference(&num1, &num2);
     printf("\nFinal sum after reference function: %d\n", num1 + num2);
