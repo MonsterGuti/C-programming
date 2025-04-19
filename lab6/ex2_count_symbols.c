@@ -6,9 +6,11 @@ int main()
     char myChar;
     int index = 0;
 
-    while (index < 20) {
+    while (index < 20)
+    {
         scanf("%c", &myChar);
-        if (myChar == '\n') break;
+        if (myChar == '\n')
+            break;
         arrChar[index++] = myChar;
     }
 
@@ -19,18 +21,20 @@ int main()
         char currentChar = arrChar[i];
         int currentCount = 1;
 
+        if (currentChar == '\0')
+            continue;
+
         for (int j = i + 1; j < mySize; j++)
         {
-            if (arrChar[j] == currentChar) {
+            if (arrChar[j] == currentChar)
+            {
                 currentCount++;
                 arrChar[j] = '\0';
             }
         }
 
-        if (currentChar != '\0') {
-            printf("%c - %d\n", currentChar, currentCount);
-        }
+        printf("%c - %d\n", currentChar, currentCount);
     }
-    
+
     return 0;
 }

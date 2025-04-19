@@ -4,7 +4,7 @@ int main() {
     int arr[20];
     int n = 0;
     int maxCount = 1, currentCount = 1;
-    int maxValue = 0, currentValue;
+    int maxValue = 0;
 
     while (1) {
         scanf("%d", &arr[n]);
