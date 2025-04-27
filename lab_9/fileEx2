@@ -58,7 +58,7 @@ void show_all_cars() {
     if (!bin) {
         printf("Failed to access 'cars.bin'.\n");
     } else {
-        while (fread(&car, sizeof(Car), 1, bin)) {
+        while (fread(&car, sizeof(Car), 1, bin)) {  
             printf("Brand: %s | Model: %s | Volume: %.2f | Price: %.2f | Reg: %c\n",
                    car.brand, car.model, car.engine_volume, car.price, car.registered);
         }
