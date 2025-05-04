@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
 
-// Task 1: Input and store data for ice cream products
 typedef struct
 {
-    char name[21];      
-    int code;           
-    char expiry[11];    
-    float price;        
+    char name[21];
+    int code;
+    char expiry[11];
+    float price;
 } Product;
 
 // Task 2: Calculate average price of products cheaper than a given value
@@ -101,6 +102,24 @@ void printInfo(const char *name, int targetCode)
     fclose(f);
 }
 
+// Validate date format YYYY.MM.DD
+bool isValidDateFormat(const char *date)
+{
+    if (strlen(date) != 10) return false;
+    if (date[4] != '.' || date[7] != '.') return false;
+    for (int i = 0; i < 10; i++)
+    {
+        if (i == 4 || i == 7) continue;
+        if (!isdigit(date[i])) return false;
+    }
+    int year = atoi(date);
+    int month = atoi(date + 5);
+    int day = atoi(date + 8);
+    if (year < 2024 || month < 1 || month > 12 || day < 1 || day > 31)
+        return false;
+    return true;
+}
+
 int main()
 {
     int n;
@@ -117,6 +136,7 @@ int main()
         return 1;
     }
 
+    // Task 1: Input and store product data
     for (int i = 0; i < n; i++)
     {
         printf("Product #%d\n", i + 1);
@@ -124,8 +144,10 @@ int main()
         scanf("%s", products[i].name);
         printf("Code: ");
         scanf("%d", &products[i].code);
-        printf("Expiry (YYYY.MM.DD): ");
-        scanf("%s", products[i].expiry);
+        do {
+            printf("Expiry (YYYY.MM.DD): ");
+            scanf("%s", products[i].expiry);
+        } while (!isValidDateFormat(products[i].expiry));
         printf("Price: ");
         scanf("%f", &products[i].price);
     }
@@ -140,8 +162,11 @@ int main()
     // Task 3
     char date[11];
     float minPrice;
-    printf("Enter expiry date and minimum price to save in file: ");
-    scanf("%s %f", date, &minPrice);
+    do {
+        printf("Enter expiry date (YYYY.MM.DD) and minimum price to save in file: ");
+        scanf("%s %f", date, &minPrice);
+    } while (!isValidDateFormat(date));
+
     int savedCount = writeTextFile(products, n, date, minPrice);
     printf("%d products saved to products.txt\n", savedCount);
 
