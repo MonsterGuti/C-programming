@@ -160,7 +160,7 @@ int main()
     fgets(searchedDiagnose, sizeof(searchedDiagnose), stdin);
     searchedDiagnose[strcspn(searchedDiagnose, "\n")] = 0;
     int numberOfTreatments = countTreatment(history, n, searchedName, searchedDiagnose);
-    printf("Number of treatments for Ivan Ivanov with Flu: %d\n", numberOfTreatments);
+    printf("Number of treatments for %s with %s: %d\n",searchedName, searchedDiagnose numberOfTreatments);
 
     history = addNewTreatment(history, &n);
     if(!history)
